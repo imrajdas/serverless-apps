@@ -1,0 +1,22 @@
+service: file-api # NOTE: update this with your service name
+plugins:
+  - serverless-webpack
+  - serverless-domain-manager
+# you can add statements to the Lambda function's IAM Role here
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:*
+      Resource: "arn:aws:s3:::YOUR_BUCCKET/*"
+
+#Functions
+functions:
+  image_upload:
+    handler: image_upload.main
+    name: ${self:provider.stage}-image_upload
+    events:
+      - http:
+          path: upload/images
+          method: post
+          authorizer: aws_iam
+          cors: true
