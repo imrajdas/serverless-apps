@@ -1,3 +1,3 @@
-## Serverless function to upload base64 image to AWS S3 bucket
+## Serverless App
 
-Base64 Image ---> s3 Bucket
+# This project is under development mode.

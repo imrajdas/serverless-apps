@@ -1,5 +1,5 @@
 import aws from 'aws-sdk';
-import { success, failure } from './inc/response';
+import { success, failure } from '../../inc/response';
 import sha1 from 'sha1';
 const s3 = new aws.S3();
 const moment = require('moment');
