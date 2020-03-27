@@ -5,6 +5,7 @@ const s3 = new aws.S3();
 const moment = require('moment');
 const unixTime = require('unix-time')
 const fileType = require('file-type');
+
 //getFile function
 let getFile = function(fileMime, buffer) {
     let fileExt = fileMime.ext
@@ -35,25 +36,20 @@ let getFile = function(fileMime, buffer) {
 }
 // main function
 export function main(event, context, callback) {
+
   console.log(event);
+  
   let request = JSON.parse(event.body)
-  console.log("Request " + request);
   let base64String = request.base64String
-  console.log("base64encoded " + base64String);
   let buffer = new Buffer(base64String, 'base64')
   let fileMime = fileType(buffer)
-  console.log("buffer" + buffer)
-  console.log("filemine" + fileMime);
-  
 
   if(fileMime == null) {
     callback(failure({ status: false, message: "not supported file type" }))
   }
   
   let file = getFile(fileMime, buffer)
-  console.log(file);
   let params = file.params
-  console.log(params);
 
   s3.putObject(params, function(err, data) {
     if(err) {
